@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: var(--color-blue-500);
+  --color-danger: var(--color-rose-600);
+}
+
+@layer components {
+  .form-input {
+    @apply w-full min-w-0 appearance-none rounded border border-zinc-900 bg-zinc-700 p-1.5 focus-within:border-transparent focus-within:outline focus:border-transparent focus:outline active:border-transparent active:outline invalid:border-danger disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .form-checkbox[type="checkbox"],
+  .form-radio[type="radio"] {
+    @apply flex h-4 w-4 accent-accent text-zinc-500;
+  }
+}
