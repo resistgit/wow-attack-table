@@ -1,8 +1,7 @@
-name: Deploy static content to Pages
+name: Deploy
 
 on:
   push:
-    branches: ["master"]
     tags: ["v*"]
 
   # Allows you to run this workflow manually from the Actions tab
