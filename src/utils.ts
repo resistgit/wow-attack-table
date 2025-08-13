@@ -15,6 +15,8 @@ export function clamp(value: number, min = 0, max = 100): number {
   return Math.max(min, Math.min(value, max))
 }
 
-export function formatNumber(value: number): string {
-  return value.toFixed(1)
-}
+export const percentFormatter = new Intl.NumberFormat("en-US", {
+  style: 'percent',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 1
+})

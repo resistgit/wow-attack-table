@@ -11,10 +11,10 @@ type Props = {
 
 export default function Field({ label, errors, description, hiddenLabel, children }: Props) {
   return (
-    <div className="grid gap-x-2 sm:grid-cols-[3fr_5fr]">
+    <div className="grid gap-x-4 grid-cols-2">
       <div className="block">
         {!hiddenLabel && <label className="block font-semibold">{label}</label>}
-        {description && <div className="text-sm text-gray-500">{description}</div>}
+        {description && <div className="text-sm text-zinc-400">{description}</div>}
         {errors?.map((error) => (
           <p key={error} className="text-xs text-danger">
             {error}

@@ -1,7 +1,7 @@
 import Field from "./components/field"
 import Input from "./components/input"
 import Checkbox from "./components/checkbox"
-import { asNumber, cls, formatNumber } from "./utils"
+import { asNumber, cls, percentFormatter } from "./utils"
 import { usePersistState } from "./hooks/use-persist-state"
 import { baseSkill, calcAttackTable } from "./attack-table"
 
@@ -9,7 +9,7 @@ function App() {
   const [playerLvl, setLevel] = usePersistState("player-level", 60)
   const [extraSkill, setExtraSkill] = usePersistState("player-extra-skill", 0)
   const [hit, setHit] = usePersistState("player-hit", 0)
-  const [isDW, setIsDW] = usePersistState("player-dw", false)
+  const [isDW, setIsDW] = usePersistState("player-dw", true)
   const [canParry, setCanParry] = usePersistState("target-parry", false)
   const [canBlock, setCanBlock] = usePersistState("target-block", false)
 
@@ -21,41 +21,41 @@ function App() {
   return (
     <>
       <div className="mx-auto p-4 max-w-xl">
-        <h1 className="my-8 text-3xl font-bold">Classic WoW Attack Table</h1>
+        <h1 className="my-8 text-4xl font-bold text-balance">Classic WoW Attack Table</h1>
 
-        <div className="space-y-1.5">
-          <Field label="Player: Level">
-            <Input value={playerLvl} onChange={(v) => setLevel(asNumber(v) ?? 1)} type="number" min={1} max={60} />
+        <div className="space-y-1.5 max-w-fit">
+          <Field label="Level">
+            <Input value={playerLvl} onChange={(v) => setLevel(asNumber(v) ?? 1)} type="number" step={1} min={1} max={60} />
           </Field>
 
-          <Field label="Player: Weapon Skill">
+          <Field label="Extra Weapon Skill" description={`Base: ${baseSkill(playerLvl)}`}>
             <div className="flex items-center gap-2">
-              <span className="whitespace-nowrap">{baseSkill(playerLvl)} +</span>
               <Input
                 placeholder="MH"
                 value={extraSkill}
                 onChange={(v) => setExtraSkill(asNumber(v) ?? 0)}
                 className="w-auto"
                 type="number"
+                step={1}
                 min={0}
                 max={50} />
               <span className="whitespace-nowrap font-semibold">= {baseSkill(playerLvl) + extraSkill}</span>
             </div>
           </Field>
 
-          <Field label="Player: Hit Rating (%)">
-            <Input value={hit} onChange={(v) => setHit(asNumber(v) ?? 0)} type="number" min={0} max={50} />
+          <Field label="Hit Rating (%)">
+            <Input value={hit} onChange={(v) => setHit(asNumber(v) ?? 0)} type="number" step={1} min={0} max={50} />
           </Field>
 
-          <Field label="Player: Dual Wield" hiddenLabel>
+          <Field label="Dual Wielding" hiddenLabel>
             <Checkbox checked={isDW} onChange={(v) => setIsDW(v ?? false)} />
           </Field>
 
-          <Field label="Target: Can Parry" hiddenLabel>
+          <Field label="Target Can Parry" hiddenLabel>
             <Checkbox checked={canParry} onChange={(v) => setCanParry(v ?? false)} />
           </Field>
 
-          <Field label="Target: Can Block" hiddenLabel>
+          <Field label="Target Can Block" hiddenLabel>
             <Checkbox checked={canBlock} onChange={(v) => setCanBlock(v ?? false)} />
           </Field>
         </div>
@@ -98,37 +98,37 @@ function App() {
                 <tr key={targetLvl} className="[&>*]:px-2 [&>*]:py-0.5">
                   <td className="text-right">{targetLvl == playerLvl + 3 && "💀"}{targetLvl}</td>
                   <td className={cls("text-right bg-yellow-600/30", !table.missSkill && "text-white/20")}>
-                    {formatNumber(table.missSkill)}%
+                    {percentFormatter.format(table.missSkill / 100)}
                   </td>
                   <td className={cls("text-right bg-yellow-600/30", !table.dodge && "text-white/20")}>
-                    {formatNumber(table.dodge)}%
+                    {percentFormatter.format(table.dodge / 100)}
                   </td>
                   <td className={cls("text-right bg-yellow-600/30", !table.parry && "text-white/20")}>
-                    {formatNumber(table.parry)}%
+                    {percentFormatter.format(table.parry / 100)}
                   </td>
                   <td className={cls("text-right bg-yellow-600/30", !table.block && "text-white/20")}>
-                    {formatNumber(table.block)}%
+                    {percentFormatter.format(table.block / 100)}
                   </td>
                   <td className={cls("text-right bg-gray-400/30", !table.missAuto && "text-white/20")}>
-                    {formatNumber(table.missAuto)}%
+                    {percentFormatter.format(table.missAuto / 100)}
                   </td>
                   <td className={cls("text-right bg-gray-400/30", !table.dodge && "text-white/20")}>
-                    {formatNumber(table.dodge)}%
+                    {percentFormatter.format(table.dodge / 100)}
                   </td>
                   <td className={cls("text-right bg-gray-400/30", !table.parry && "text-white/20")}>
-                    {formatNumber(table.parry)}%
+                    {percentFormatter.format(table.parry / 100)}
                   </td>
                   <td className={cls("text-right bg-gray-400/30", !table.block && "text-white/20")}>
-                    {formatNumber(table.block)}%
+                    {percentFormatter.format(table.block / 100)}
                   </td>
                   <td className={cls("text-right bg-gray-400/30", !table.glanceChance && "text-white/20")}>
-                    {formatNumber(table.glanceChance)}%
+                    {percentFormatter.format(table.glanceChance / 100)}
                   </td>
                   <td className={cls("text-right bg-gray-400/30", !table.glancePenalty && "text-white/20")}>
-                    {formatNumber(table.glancePenalty)}%
+                    {percentFormatter.format(table.glancePenalty / 100)}
                   </td>
                   <td className={cls("text-right bg-gray-400/30", !table.critCap && "text-white/20")}>
-                    {formatNumber(table.critCap)}%
+                    {percentFormatter.format(table.critCap / 100)}
                   </td>
                 </tr>
               )
