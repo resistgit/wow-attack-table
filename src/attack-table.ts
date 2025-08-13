@@ -33,10 +33,9 @@ export function calcAttackTable({
   }
 
   function glancePenalty(): number {
-    const glancePenaltyLow = clamp(1.3 - 0.05 * skillDiff, 0.1, 0.91)
-    const glancePenaltyHigh = clamp(1.2 - 0.03 * skillDiff, 0.2, 0.99)
-    const glancePenalty = (glancePenaltyLow + glancePenaltyHigh) / 2
-    return (1 - glancePenalty) * 100
+    const lowEnd = clamp(130 - 5 * skillDiff, 10, 91)
+    const highEnd = clamp(120 - 3 * skillDiff, 20, 99)
+    return 100 - (lowEnd + highEnd) / 2
   }
 
   function critSupp(): number {
