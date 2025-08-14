@@ -24,12 +24,12 @@ export function calcAttackTable({
   function parry(): number {
     if (!targetCanParry) return 0
     if (targetLvl - playerLvl > 2) return 14
-    return 5 + skillDiff * 0.1
+    return clamp(5 + skillDiff * 0.1)
   }
 
   function block(): number {
     if (!targetCanBlock) return 0
-    return Math.min(5, 5 + skillDiff * 0.1)
+    return clamp(Math.min(5, 5 + skillDiff * 0.1))
   }
 
   function glancePenalty(): number {
@@ -51,7 +51,7 @@ export function calcAttackTable({
   const skillDiff = targetDefense - playerWeaponSkill
   const hitRating = playerHitRating - (skillDiff > 10 ? 1 : 0)
   const baseMiss = 5 + skillDiff * (skillDiff > 10 ? 0.2 : 0.1)
-  const dodge = 5 + skillDiff * 0.1
+  const dodge = clamp(5 + skillDiff * 0.1)
   const missSkill = clamp(baseMiss - hitRating)
   const missAuto = clamp(baseMiss - hitRating + (playerIsDW ? 19 : 0))
   const glanceChance = clamp(10 + (targetDefense - baseSkill(playerLvl)) * 2)
