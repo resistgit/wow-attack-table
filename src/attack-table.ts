@@ -6,7 +6,7 @@ export function baseSkill(level: number): number {
 
 export function calcAttackTable({
   playerLvl,
-  playerExtraSkill,
+  playerWeaponSkill,
   playerHitRating,
   playerIsDW,
   targetLvl,
@@ -14,7 +14,7 @@ export function calcAttackTable({
   targetCanBlock,
 }: {
   playerLvl: number,
-  playerExtraSkill: number,
+  playerWeaponSkill: number,
   playerHitRating: number,
   playerIsDW: boolean,
   targetLvl: number,
@@ -48,15 +48,15 @@ export function calcAttackTable({
   }
 
   const targetDefense = baseSkill(targetLvl)
-  const weaponSkill = baseSkill(playerLvl) + playerExtraSkill
-  const skillDiff = targetDefense - weaponSkill
+  const skillDiff = targetDefense - playerWeaponSkill
   const hitRating = playerHitRating - (skillDiff > 10 ? 1 : 0)
   const baseMiss = 5 + skillDiff * (skillDiff > 10 ? 0.2 : 0.1)
   const dodge = 5 + skillDiff * 0.1
   const missSkill = clamp(baseMiss - hitRating)
   const missAuto = clamp(baseMiss - hitRating + (playerIsDW ? 19 : 0))
   const glanceChance = clamp(10 + (targetDefense - baseSkill(playerLvl)) * 2)
-  const critCap = clamp(100 - missAuto - dodge - parry() - block() - glanceChance - critSupp() + playerExtraSkill * 0.04)
+  const extraWeaponSkill = playerWeaponSkill - baseSkill(playerLvl)
+  const critCap = clamp(100 - missAuto - dodge - parry() - block() - glanceChance - critSupp() + extraWeaponSkill * 0.04)
 
   return {
     missSkill,

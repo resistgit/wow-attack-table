@@ -4,7 +4,7 @@ import { calcAttackTable } from "./attack-table"
 test("no skill, no hit, no dw, backstab vs boss", () => {
   const r = calcAttackTable({
     playerLvl: 60,
-    playerExtraSkill: 0,
+    playerWeaponSkill: 300,
     playerHitRating: 0,
     playerIsDW: false,
     targetLvl: 63,
@@ -24,7 +24,7 @@ test("no skill, no hit, no dw, backstab vs boss", () => {
 test("no skill, no hit, dw, backstab vs same level", () => {
   const r = calcAttackTable({
     playerLvl: 60,
-    playerExtraSkill: 0,
+    playerWeaponSkill: 300,
     playerHitRating: 0,
     playerIsDW: true,
     targetLvl: 60,
@@ -44,7 +44,7 @@ test("no skill, no hit, dw, backstab vs same level", () => {
 test("5 skill, no hit, no dw, backstab vs boss", () => {
   const r = calcAttackTable({
     playerLvl: 60,
-    playerExtraSkill: 5,
+    playerWeaponSkill: 305,
     playerHitRating: 0,
     playerIsDW: false,
     targetLvl: 63,
@@ -64,7 +64,7 @@ test("5 skill, no hit, no dw, backstab vs boss", () => {
 test("5 skill, 6 hit, no dw, backstab vs boss", () => {
   const r = calcAttackTable({
     playerLvl: 60,
-    playerExtraSkill: 5,
+    playerWeaponSkill: 305,
     playerHitRating: 6,
     playerIsDW: false,
     targetLvl: 63,
@@ -84,7 +84,7 @@ test("5 skill, 6 hit, no dw, backstab vs boss", () => {
 test("5 skill, 6 hit, dw, backstab vs boss", () => {
   const r = calcAttackTable({
     playerLvl: 60,
-    playerExtraSkill: 5,
+    playerWeaponSkill: 305,
     playerHitRating: 6,
     playerIsDW: true,
     targetLvl: 63,
@@ -104,7 +104,7 @@ test("5 skill, 6 hit, dw, backstab vs boss", () => {
 test("8 skill, 5 hit, dw, tanking vs boss with shield", () => {
   const r = calcAttackTable({
     playerLvl: 60,
-    playerExtraSkill: 8,
+    playerWeaponSkill: 308,
     playerHitRating: 5,
     playerIsDW: true,
     targetLvl: 63,
@@ -124,7 +124,7 @@ test("8 skill, 5 hit, dw, tanking vs boss with shield", () => {
 test("8 skill, 9 hit, dw, tanking vs boss with shield", () => {
   const r = calcAttackTable({
     playerLvl: 60,
-    playerExtraSkill: 8,
+    playerWeaponSkill: 308,
     playerHitRating: 9,
     playerIsDW: true,
     targetLvl: 63,

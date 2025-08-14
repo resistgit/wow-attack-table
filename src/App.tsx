@@ -7,7 +7,7 @@ import { baseSkill, calcAttackTable } from "./attack-table"
 
 function App() {
   const [playerLvl, setLevel] = usePersistState("player-level", 60)
-  const [extraSkill, setExtraSkill] = usePersistState("player-extra-skill", 0)
+  const [weaponSkill, setWeaponSkill] = usePersistState("player-weapon-skill", 300)
   const [hit, setHit] = usePersistState("player-hit", 0)
   const [isDW, setIsDW] = usePersistState("player-dw", true)
   const [canParry, setCanParry] = usePersistState("target-parry", false)
@@ -28,19 +28,8 @@ function App() {
             <Input value={playerLvl} onChange={(v) => setLevel(asNumber(v) ?? 1)} type="number" step={1} min={1} max={60} />
           </Field>
 
-          <Field label="Extra Weapon Skill" description={`Base: ${baseSkill(playerLvl)}`}>
-            <div className="flex items-center gap-2">
-              <Input
-                placeholder="MH"
-                value={extraSkill}
-                onChange={(v) => setExtraSkill(asNumber(v) ?? 0)}
-                className="w-auto"
-                type="number"
-                step={1}
-                min={0}
-                max={50} />
-              <span className="whitespace-nowrap font-semibold">= {baseSkill(playerLvl) + extraSkill}</span>
-            </div>
+          <Field label="Weapon Skill" description={`Base: ${baseSkill(playerLvl)}`}>
+            <Input value={weaponSkill} onChange={(v) => setWeaponSkill(asNumber(v) ?? 0)} type="number" step={1} min={1} max={350} />
           </Field>
 
           <Field label="Hit Rating (%)">
@@ -87,7 +76,7 @@ function App() {
             {targetLvls.map(targetLvl => {
               const table = calcAttackTable({
                 playerLvl,
-                playerExtraSkill: extraSkill,
+                playerWeaponSkill: weaponSkill,
                 playerHitRating: hit,
                 playerIsDW: isDW,
                 targetLvl,
